@@ -1,6 +1,6 @@
 import React from 'react';
 import List from './List';
-
+import Add from './Add';
 
 class App extends React.Component{
   constructor(){
@@ -8,22 +8,28 @@ class App extends React.Component{
     this.state = {
       data : ['Mary','Alice']
     }
-    this.input = React.createRef();
+    // this.input = React.createRef();
     this.add = this.add.bind(this); // this of add = App (without = this of add = add)
+    this.remove = this.remove.bind(this);
   }
 
-  add(){ 
+  add(name){ 
     this.setState({
-      data : [...this.state.data , this.input.current.value]
+      data : [...this.state.data , name]
+    })
+  }
+
+  remove(name){
+    this.setState({
+      data : this.state.data.filter( item => item != name)
     })
   }
   
   render(){
     return(
         <div>
-          <List data={this.state.data} />
-          <input type="text" ref={this.input} />
-          <button onClick = {this.add} >+</button>
+          <List data={this.state.data} remove= {this.remove} />
+          <Add add = {this.add} />
           
         </div>
 
